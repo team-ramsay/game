@@ -1,7 +1,11 @@
 import interact from 'interactjs';
+import $ from 'jquery';
 require('./style.scss');
 
 console.log("hello world");
+$('#add').click(() => {
+    $('body').append($('<div class="draggable">test</div>'));
+});
 var myList = document.querySelector('#my-list');
 
 
@@ -16,7 +20,7 @@ var myList = document.querySelector('#my-list');
       elementRect: { top: 0, left: 0, bottom: 1, right: 1 }
     },
     // enable autoScroll
-    autoScroll: true,
+    autoScroll: false,
 
     // call this function on every dragmove event
     onmove: dragMoveListener,

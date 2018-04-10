@@ -1,20 +1,48 @@
-#drag-1, #drag-2 {
-  width: 15%;
-  height: 40%;
-  min-height: 6.5em;
-  margin: 10%;
+.wrapper {
+  display: grid;
+  background: no-repeat url(grid.png);
 
-  background-color: #29e;
-  color: white;
-
-  border-radius: 0.75em;
-  padding: 4%;
-
-  -webkit-transform: translate(0px, 0px);
-          transform: translate(0px, 0px);
+  grid-gap: 10px;
+  grid-template-columns:  repeat(12, 75px);
+  grid-template-rows: repeat( 8, 75px);
+  background-color: #fff;
+  color: #444;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background: #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#drag-me::before {
-  content: "#" attr(id);
-  font-weight: bold;
+#gordon {
+  grid-column: 1 / 3;
+  grid-row: 1 / 3;
+  background: red;
+  align-self: stretch;
+}
+#trash {
+  grid-column: 12/12;
+  grid-row: 8/8;
+  background: red;
+  align-self: stretch;
+}
+#grill {
+  grid-column: 1/3;
+  grid-row: 3/6;
+  background: 
+    radial-gradient(black 15%, transparent 16%) 0 0,
+    radial-gradient(black 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  color: white;
+  background-size:16px 16px;
+  align-self: stretch;
+}
+#steak {
+  background: url('./assets/steak.png');
+  background-size: cover;
 }
