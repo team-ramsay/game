@@ -50,11 +50,13 @@ interact('.item')
       }
       var textEl = event.target.querySelector('p');
 
+      /*
       textEl && (textEl.textContent =
         'moved a distance of '
         + (Math.sqrt(Math.pow(event.pageX - event.x0, 2) +
           Math.pow(event.pageY - event.y0, 2) | 0))
           .toFixed(2) + 'px');
+          */
     }
   });
 
@@ -124,7 +126,7 @@ interact('.dropzone').dropzone({
     // feedback the possibility of a drop
     dropzoneElement.classList.add('drop-target');
     draggableElement.classList.add('can-drop');
-    draggableElement.textContent = 'Dragged in';
+    //draggableElement.textContent = 'Dragged in';
   },
   ondragleave: function (event) {
     // remove the drop feedback style
@@ -138,7 +140,7 @@ interact('.dropzone').dropzone({
     }
   },
   ondrop: function (event) {
-    event.relatedTarget.textContent = 'Dropped';
+    //event.relatedTarget.textContent = 'Dropped';
     //console.log('yeahs', event);
     event.target.classList.add('on');
     switch (event.target.id) {
