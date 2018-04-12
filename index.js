@@ -2,6 +2,8 @@ import interact from 'interactjs';
 import $ from 'jquery';
 import Howler from 'howler';
 
+window.$ = $;
+
 // assets
 import soundUrl from './assets/fucking-pathetic.mp3';
 import backgroundMp3 from './assets/background.mp3';
@@ -91,6 +93,8 @@ setInterval(() => {
   grilling.forEach((el) => {
     const original = parseInt(el.getAttribute('data-grilled')) || 0;
     el.setAttribute('data-grilled', original+1);
+    const contrast = ((30-original)/30)*2
+    $(el).css('filter', `contrast(${contrast})`)
     if (original === 30)
       return gordonAngry('meat');
     if (original === 20)
