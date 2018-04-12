@@ -4,25 +4,33 @@ import Howler from 'howler';
 
 window.$ = $;
 
-// assets
-import soundUrl from './assets/fucking-pathetic.mp3';
-import backgroundMp3 from './assets/background.mp3';
-import backgroundWebm from './assets/background.webm';
-
 // styles
 require('./style.scss');
 
 // sounds
 const backgroundSound = new Howl({
-  src: [backgroundWebm, backgroundMp3],
+  src: [
+    require('./assets/background.mp3'),
+    require('./assets/background.webm')
+  ],
   autoplay: false,
   volume: .1,
   loop: true
 });
 
+const garbageSound = new Howl({
+  src: [require('./assets/garbage.mp3')],
+  sprite: {
+    '1': [800, 1600],
+    '2': [1900, 2800],
+    '3': [4000, 1000],
+    '4': [8500, 2000]
+  }
+});
+
 // background music
 var sound = new Howl({
-  src: [soundUrl],
+  src: [require('./assets/fucking-pathetic.mp3')],
   volume: 2,
 });
 
@@ -152,11 +160,15 @@ interact('.dropzone').dropzone({
     event.target.classList.add('on');
     switch (event.target.id) {
       case 'grill':
-        console.log('dropped on grill')
         grilling.push(event.relatedTarget);
         break;
+      case 'trash':
+        $(event.relatedTarget).remove();
+        const randomNr = Math.round((Math.random()*4)+1).toString();
+        garbageSound.play(randomNr);
+        break;
       default:
-        console.log('unknown')
+        console.log('unknown:', event.target.id, event);
     }
   },
   ondropdeactivate: function (event) {
