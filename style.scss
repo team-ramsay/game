@@ -21,11 +21,20 @@ body {
 #gordon {
   grid-column: 1 / 3;
   grid-row: 1 / 3;
-  background: red;
   align-self: stretch;
 
-  background: url('./assets/gordon.png');
+  background: white;
   background-size: cover;
+  background-image: url('./assets/gordon.png');
+  &.mad1 {
+    background-image: url('./assets/gordon_talk.gif');
+  }
+  &.mad2 {
+    background-image: url('./assets/gordon_angry_talk.gif');
+  }
+  &.mad3 {
+    background-image: url('./assets/gordon_realmad_talk.gif');
+  }
 }
 #trash {
   grid-column: 12/12;

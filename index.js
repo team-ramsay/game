@@ -1,5 +1,6 @@
 import interact from 'interactjs';
 import $ from 'jquery';
+import Howler from 'howler';
 require('./style.scss');
 
 console.log("hello world");
@@ -63,10 +64,24 @@ window.dragMoveListener = dragMoveListener;
 const grilling = [];
 window.grilling = grilling;
 
+var gordonAngry = 0;
+
 setInterval(() => {
   grilling.forEach((el) => {
     const original = parseInt(el.getAttribute('data-grilled')) || 0;
     el.setAttribute('data-grilled', original+1);
+    if (original > 30) {
+      $('#gordon').removeClass().addClass('mad3');
+      return;
+    }
+    if (original > 20) {
+      $('#gordon').removeClass().addClass('mad2');
+      return;
+    }
+    if (original > 10) {
+      $('#gordon').removeClass().addClass('mad1');
+      return;
+    }
   })
 }, 500)
 
