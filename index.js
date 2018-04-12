@@ -15,7 +15,7 @@ require('./style.scss');
 // sounds
 const backgroundSound = new Howl({
   src: [backgroundWebm, backgroundMp3],
-  autoplay: true,
+  autoplay: false,
   volume: .1,
   loop: true
 });
@@ -25,6 +25,13 @@ var sound = new Howl({
   src: [soundUrl],
   volume: 2,
 });
+
+$('#controls').click(() => {
+  if (backgroundSound.playing())
+    backgroundSound.pause()
+  else
+    backgroundSound.play()
+})
 
 interact('.item')
   .draggable({

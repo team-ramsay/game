@@ -1,3 +1,10 @@
+#controls {
+  position: absolute;
+  top: 10px; left: 10px;
+  &:hover {
+    cursor: pointer;
+  }
+}
 .wrapper {
   display: grid;
   background: no-repeat url('./assets/background.png');
@@ -55,5 +62,5 @@ body {
 }
 .steak {
   background: url('./assets/steak.png');
-  transform: contrast(2);
+  filter: contrast(2);
 }
