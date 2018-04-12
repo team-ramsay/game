@@ -18,6 +18,7 @@ const backgroundSound = new Howl({
   loop: true
 });
 
+// garbage sound with multiple variations
 const garbageSound = new Howl({
   src: [require('./assets/garbage.mp3')],
   sprite: {
@@ -34,12 +35,15 @@ var sound = new Howl({
   volume: 2,
 });
 
+// controls for controlling background music
 $('#controls').click(() => {
   if (backgroundSound.playing())
     backgroundSound.pause()
   else
     backgroundSound.play()
 })
+
+let ingredientNr = 1;
 
 interact('.item')
   .draggable({
@@ -72,6 +76,15 @@ interact('.item')
           Math.pow(event.pageY - event.y0, 2) | 0))
           .toFixed(2) + 'px');
           */
+    }
+  }).on('dragstart', (event) => {
+    // only if the data-unique attribute is not set
+    if (event.target.getAttribute('data-unique')) {
+      return;
+    }
+    if (!event.target.getAttribute('data-ingredient-no')) {
+      $(event.target).clone().appendTo('.wrapper');
+      event.target.setAttribute('data-ingredient-no', ingredientNr++);
     }
   });
 
@@ -106,6 +119,8 @@ const gordonAngry = (type) => {
     $('#gordon').removeClass();
   }, sound.duration()*1000);
 };
+
+// interval that handles the grilling of stuff
 setInterval(() => {
   grilling.forEach((el) => {
     const original = parseInt(el.getAttribute('data-grilled')) || 0;
