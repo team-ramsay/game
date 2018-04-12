@@ -4,13 +4,24 @@ import Howler from 'howler';
 
 // assets
 import soundUrl from './assets/fucking-pathetic.mp3';
+import backgroundMp3 from './assets/background.mp3';
+import backgroundWebm from './assets/background.webm';
 
 // styles
 require('./style.scss');
 
 // sounds
+const backgroundSound = new Howl({
+  src: [backgroundWebm, backgroundMp3],
+  autoplay: true,
+  volume: .1,
+  loop: true
+});
+
+// background music
 var sound = new Howl({
-  src: [soundUrl]
+  src: [soundUrl],
+  volume: 2,
 });
 
 interact('.item')
