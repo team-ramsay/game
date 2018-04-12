@@ -1,9 +1,10 @@
 .wrapper {
   display: grid;
-  background: no-repeat url(grid.png);
+  background: no-repeat url('./assets/background.png');
+  background-size: contain;
 
   grid-gap: 10px;
-  grid-template-columns:  repeat(12, 75px);
+  grid-template-columns: repeat(12, 75px);
   grid-template-rows: repeat( 8, 75px);
   background-color: #fff;
   color: #444;
@@ -22,6 +23,9 @@ body {
   grid-row: 1 / 3;
   background: red;
   align-self: stretch;
+
+  background: url('./assets/gordon.png');
+  background-size: cover;
 }
 #trash {
   grid-column: 12/12;
@@ -32,7 +36,7 @@ body {
 #grill {
   grid-column: 1/3;
   grid-row: 3/6;
-  background: 
+  background:
     radial-gradient(black 15%, transparent 16%) 0 0,
     radial-gradient(black 15%, transparent 16%) 8px 8px,
     radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px,
@@ -41,8 +45,20 @@ body {
   color: white;
   background-size:16px 16px;
   align-self: stretch;
+  transition: background 2s ease-in;
 }
-#steak {
+#grill.on {
+  background:
+    radial-gradient(red 15%, transparent 16%) 0 0,
+    radial-gradient(red 15%, transparent 16%) 8px 8px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 0 1px,
+    radial-gradient(rgba(255, 255, 255, .1) 15%, transparent 20%) 8px 9px;
+  background-color:#282828;
+  background-size:16px 16px;
+}
+.item {
+  background-size: cover !important;
+}
+.steak {
   background: url('./assets/steak.png');
-  background-size: cover;
 }
