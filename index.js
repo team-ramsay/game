@@ -1,14 +1,17 @@
 import interact from 'interactjs';
 import $ from 'jquery';
 import Howler from 'howler';
+
+// assets
+import soundUrl from './assets/fucking-pathetic.mp3';
+
+// styles
 require('./style.scss');
 
-console.log("hello world");
-$('#add').click(() => {
-  $('body').append($('<div class="draggable">test</div>'));
+// sounds
+var sound = new Howl({
+  src: [soundUrl]
 });
-var myList = document.querySelector('#my-list');
-
 
 interact('.item')
   .draggable({
@@ -64,24 +67,25 @@ window.dragMoveListener = dragMoveListener;
 const grilling = [];
 window.grilling = grilling;
 
-var gordonAngry = 0;
-
+let gordonAngryLevel = 0;
+const gordonAngry = (type) => {
+  gordonAngryLevel++;
+  $('#gordon').removeClass().addClass('mad'+gordonAngryLevel);
+  sound.play();
+  setTimeout(() => {
+    $('#gordon').removeClass();
+  }, sound.duration()*1000);
+};
 setInterval(() => {
   grilling.forEach((el) => {
     const original = parseInt(el.getAttribute('data-grilled')) || 0;
     el.setAttribute('data-grilled', original+1);
-    if (original > 30) {
-      $('#gordon').removeClass().addClass('mad3');
-      return;
-    }
-    if (original > 20) {
-      $('#gordon').removeClass().addClass('mad2');
-      return;
-    }
-    if (original > 10) {
-      $('#gordon').removeClass().addClass('mad1');
-      return;
-    }
+    if (original === 30)
+      return gordonAngry('meat');
+    if (original === 20)
+      return gordonAngry('meat');
+    if (original === 10)
+      return gordonAngry('meat');
   })
 }, 500)
 
