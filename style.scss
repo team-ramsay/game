@@ -66,7 +66,7 @@
 body {
   margin: 0;
   padding: 0;
-  background: #ccc;
+  background: url('./assets/cocina.gif');
   display: flex;
   align-items: center;
   justify-content: center;
@@ -89,6 +89,33 @@ body {
   &.mad3 {
     background-image: url('./assets/gordon_realmad_talk.gif');
   }
+  position: relative;
+  #angriness {
+    height: 10px;
+    width: 0%;
+    position: absolute;
+    bottom: -10px;
+    background: red;
+    transition: width 2s;
+  }
+}
+
+// full screen video
+video {
+  position: fixed; right: 0; bottom: 0;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto;
+  background-size: cover;
+  z-index: 9999;
+  display: none;
+}
+
+// title
+h1 {
+  grid-column: 2/8;
+  grid-row: 3;
+  color: white;
+  font-family: cursive;
 }
 
 // dropable zones
@@ -104,6 +131,10 @@ body {
   &.on {
     background: rgba(255, 0, 0, 0.5);
   }
+}
+#plate {
+  grid-column: 4/6;
+  grid-row: 7/8;
 }
 
 // items

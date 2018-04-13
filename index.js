@@ -37,14 +37,32 @@ const garbageSound = new Howl({
 });
 
 // sounds
-const pathetic = new Howl({
-  src: [require('./assets/fucking-pathetic.mp3')],
-  volume: 2,
-});
-const brain = new Howl({
-  src: [require('./assets/where-is-your-brain.mp3')],
-  volume: 2,
-});
+const sounds = {
+  pathetic: new Howl({
+    src: [require('./assets/fucking-pathetic.mp3')],
+    volume: 2,
+  }),
+  brain: new Howl({
+    src: [require('./assets/where-is-your-brain.mp3')],
+    volume: 2,
+  }),
+  cold: new Howl({
+    src: [require('./assets/stone-cold.mp3')],
+    volume: 2,
+  }),
+  itsraw: new Howl({
+    src: [require('./assets/itsraw.mp3')],
+    volume: 2,
+  }),
+  itsrawcomon: new Howl({
+    src: [require('./assets/itsrawcomon.mp3')],
+    volume: 2,
+  }),
+  rubber: new Howl({
+    src: [require('./assets/rubber.mp3')],
+    volume: 2,
+  }),
+};
 
 // controls for controlling background music
 $('#controls').click(() => {
@@ -55,6 +73,8 @@ $('#controls').click(() => {
 })
 
 let ingredientNr = 1;
+
+let dragAmount = 0;
 
 interact('.item')
   .draggable({
@@ -90,6 +110,8 @@ interact('.item')
     }
   }).on('dragstart', (event) => {
     // only if the data-unique attribute is not set
+    dragAmount++;
+    event.target.style.zIndex = dragAmount;
     if (event.target.getAttribute('data-unique')) {
       return;
     }
@@ -121,15 +143,37 @@ window.dragMoveListener = dragMoveListener;
 const grilling = [];
 window.grilling = grilling;
 
-let gordonAngryLevel = 0;
+let gordonAngryLevel = 0; // out of 5
 const gordonAngry = (type) => {
   gordonAngryLevel++;
+  $('#angriness').css('width', (gordonAngryLevel/5)*100+'%')
   $('#gordon').removeClass().addClass('mad'+gordonAngryLevel);
-  pathetic.play();
+  sounds[type].play();
+  if (gordonAngryLevel > 5) {
+    // game over
+    const gameOverVideo = $('video#bad:first');
+    gameOverVideo.fadeIn()
+    gameOverVideo.get(0).play()
+  }
   setTimeout(() => {
     $('#gordon').removeClass();
-  }, pathetic.duration()*1000);
+  }, sounds[type].duration()*1000);
 };
+const win = () => {
+  const video = $('video#good:first');
+  video.fadeIn()
+  video.get(0).play()
+}
+const gameOver = (type) => {
+  $('#angriness').css('width', '300%')
+  $('#gordon').removeClass().addClass('mad3');
+  sounds[type].play();
+  setTimeout(() => {
+    const gameOverVideo = $('video#bad:first');
+    gameOverVideo.fadeIn()
+    gameOverVideo.get(0).play()
+  }, sounds[type].duration()*1000);
+}
 
 // interval that handles the grilling of stuff
 setInterval(() => {
@@ -137,17 +181,17 @@ setInterval(() => {
     const original = parseInt(el.getAttribute('data-grilled')) || 0;
     el.setAttribute('data-grilled', original+1);
     const contrast = ((30-original)/30)*2
-    $(el).css('filter', `contrast(${contrast})`)
+    $(el).css('filter', `contrast(${contrast}) brightness(${contrast})`)
     if (original === 30)
-      return gordonAngry('meat');
+      return gordonAngry('pathetic');
     if (original === 20)
-      return gordonAngry('meat');
-    if (original === 10)
-      return gordonAngry('meat');
+      return gordonAngry('pathetic');
+    if (original === 20)
+      return gordonAngry('pathetic');
   })
 }, 500)
 
-
+let rawMeatOnce = false;
 interact('.dropzone').dropzone({
   // only accept elements matching this CSS selector
   accept: '.item',
@@ -181,13 +225,13 @@ interact('.dropzone').dropzone({
     }
   },
   ondrop: function (event) {
-    //event.relatedTarget.textContent = 'Dropped';
-    //console.log('yeahs', event);
     event.target.classList.add('on');
     switch (event.target.id) {
       case 'grill':
         if (!!event.relatedTarget.getAttribute('data-no-grill')) {
           $(event.relatedTarget).remove();
+          gordonAngry('brain');
+          return;
         }
         grilling.push(event.relatedTarget);
         break;
@@ -196,12 +240,28 @@ interact('.dropzone').dropzone({
         const randomNr = Math.round((Math.random()*4)+1).toString();
         garbageSound.play(randomNr);
         break;
+      case 'plate':
+        if (event.relatedTarget.getAttribute('data-meat') && event.relatedTarget.getAttribute('data-grilled')<10) {
+          if (!rawMeatOnce) {
+            gordonAngry('itsraw');
+            rawMeatOnce = true;
+          } else {
+            gameOver('itsrawcomon')
+          }
+        }
+        if (event.relatedTarget.getAttribute('data-meat') && event.relatedTarget.getAttribute('data-grilled')>20) {
+            gordonAngry('rubber');
+        }
+        if (event.relatedTarget.classList.value.indexOf('steak') > -1 && event.relatedTarget.getAttribute('data-grilled') > 10 && event.relatedTarget.getAttribute('data-grilled') < 20) {
+          win()
+        }
+        console.log('dropped on plate', event.relatedTarget.getAttribute('data-meat'))
+        break;
       default:
         console.log('unknown:', event.target.id, event);
     }
   },
   ondropdeactivate: function (event) {
-    // remove active dropzone feedback
     event.target.classList.remove('drop-active');
     event.target.classList.remove('drop-target');
   }
