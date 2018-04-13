@@ -7,7 +7,7 @@ window.$ = $;
 // styles
 require('./style.scss');
 
-// sounds
+// background music
 const backgroundSound = new Howl({
   src: [
     require('./assets/background.mp3'),
@@ -16,6 +16,13 @@ const backgroundSound = new Howl({
   autoplay: false,
   volume: .1,
   loop: true
+});
+
+// start screen
+$('#startbutton').click(() => {
+  $('#intro').fadeOut('slow', () => {
+    $('#game').show('slow')
+  });
 });
 
 // garbage sound with multiple variations
@@ -29,9 +36,13 @@ const garbageSound = new Howl({
   }
 });
 
-// background music
-var sound = new Howl({
+// sounds
+const pathetic = new Howl({
   src: [require('./assets/fucking-pathetic.mp3')],
+  volume: 2,
+});
+const brain = new Howl({
+  src: [require('./assets/where-is-your-brain.mp3')],
   volume: 2,
 });
 
@@ -114,10 +125,10 @@ let gordonAngryLevel = 0;
 const gordonAngry = (type) => {
   gordonAngryLevel++;
   $('#gordon').removeClass().addClass('mad'+gordonAngryLevel);
-  sound.play();
+  pathetic.play();
   setTimeout(() => {
     $('#gordon').removeClass();
-  }, sound.duration()*1000);
+  }, pathetic.duration()*1000);
 };
 
 // interval that handles the grilling of stuff
@@ -175,6 +186,9 @@ interact('.dropzone').dropzone({
     event.target.classList.add('on');
     switch (event.target.id) {
       case 'grill':
+        if (!!event.relatedTarget.getAttribute('data-no-grill')) {
+          $(event.relatedTarget).remove();
+        }
         grilling.push(event.relatedTarget);
         break;
       case 'trash':

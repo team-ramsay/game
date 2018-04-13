@@ -1,3 +1,50 @@
+#intro {
+#buttonPos{
+    margin-left: 32%;
+    width: 32%;
+    height: 20%;
+}
+    background-image: url("./assets/start_background.jpg");
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+#container{
+    width:50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.titelPos{
+    width: 100%;
+}
+.titelPos img{
+    width: 80%;
+    padding-left: 10%;
+    height: 20%;
+}
+
+.buttonPos{
+    margin-left: 30%;
+    width: 32%;
+    height: 20%;
+    margin-top: 30%;
+}
+.button {
+    webkit-border-radius: 53;
+    moz-border-radius: 53;
+    border-radius: 53px;
+    font-family: Arial;
+    color: #1f0b0b;
+    font-size: 35px;
+    background: #fa0000;
+    padding: 10px 40px 10px 40px;
+    text-decoration: none;
+}
+
+}
+#game {
+  display: none;
+}
 #controls {
   position: absolute;
   top: 10px; left: 10px;
